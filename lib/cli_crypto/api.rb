@@ -1,4 +1,5 @@
 require "httparty"
+require_relative "crypto_currency"
 
 class CliCrypto::Api
     def fetch
@@ -7,23 +8,32 @@ class CliCrypto::Api
         response_ltc = HTTParty.get("https://api.cryptonator.com/api/ticker/ltc-usd")
         response_doge = HTTParty.get("https://api.cryptonator.com/api/ticker/doge-usd")
         response_etc = HTTParty.get("https://api.cryptonator.com/api/ticker/etc-usd")
+    
+        array = []
         
-        # put the bitcoin data in the hash
-        hash = {}
-        fill_hash_with_response("Bitcoin", response_btc, hash)
-        fill_hash_with_response("Litecoin", response_ltc, hash)
-        fill_hash_with_response("Dogecoin", response_doge, hash)
-        fill_hash_with_response("Ethereum", response_etc, hash)
+        # create a instance of CryptoCurrency with the bitcoin response
 
-        return hash
-    end
+        btc_instance = CliCrypto::CryptoCurrency.new(
+            "bitcoin",
+            response_btc["ticker"]["price"],
+            response_btc["ticker"]["change"],
+            response_btc["ticker"]["volume"]
+        )
 
-    def fill_hash_with_response(crypto, response, hash)
-        hash[crypto] = {
-            "price" => response["ticker"]["price"],
-            "%change" => response["ticker"]["change"],
-            "current volume" => response["ticker"]["volume"]
-        }
+        ltc_instance = CliCrypto::CryptoCurrency.new("litecoin", response_ltc["ticker"]["price"], response_ltc["ticker"]["change"], response_ltc["ticker"]["volume"])
+        
+        doge_instance = CliCrypto::CryptoCurrency.new("dogecoin", response_doge["ticker"]["price"], response_doge["ticker"]["change"], response_doge["ticker"]["volume"])
+        
+        etc_instance = CliCrypto::CryptoCurrency.new("ethereum", response_etc["ticker"]["price"], response_etc["ticker"]["change"], response_etc["ticker"]["volume"])
+
+        # add instance to an array
+        array << btc_instance
+        array << ltc_instance
+        array << doge_instance
+        array << etc_instance
+
+        # return an array that has all the instances
+        return array
     end
 end
 
@@ -39,32 +49,3 @@ end
 
 
 
-
-
-
-
-
-
-
- # {
-        #     "Bitcoin" => {
-        #         "price" => response["ticker"]["price"],
-        #         "%change" => response["ticker"]["change"],
-        #         "previous" => response["ticker"]["volume"]
-        #     },
-        #     "Litecoin" => {
-        #         "price" => response_ltc["ticker"]["price"], 
-        #         "%change" => response_ltc["ticker"]["change"], 
-        #         "previous" => response_ltc["ticker"]["volume"]
-        #     },
-        #     "Dogecoin" => {
-        #         "price" => response_doge["ticker"]["price"], 
-        #         "%change" => response_doge["ticker"]["change"], 
-        #         "previous" => response_doge["ticker"]["volume"]
-        #     },
-        #     "Ethereum" => {
-        #         "price" => response_etc["ticker"]["price"], 
-        #         "%change" => response_etc["ticker"]["change"], 
-        #         "previous" => response_etc["ticker"]["volume"]
-        #     }
-        # }
