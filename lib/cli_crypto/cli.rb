@@ -35,17 +35,6 @@ class CliCrypto::CLI
         puts "Choose A Crypto Currency To See More Details, Or Press X To Exit: "
     end
 
-    def display_crypto_stats(crypto)
-        api = CliCrypto::Api.new
-        crypto_data = api.fetch
-
-        puts crypto
-        puts "The Current Price is $#{crypto_data[crypto]["price"]}: "
-        puts "The %change is #{crypto_data[crypto]["%change"]}: "
-        puts "The Current Volume is $#{crypto_data[crypto]["current volume"]}"
-        puts ""
-    end
-
     def process_input
         user_input = gets.chomp
         user_input_number = user_input.to_i
@@ -58,16 +47,27 @@ class CliCrypto::CLI
             puts "Sorry, this selection is invalid.  Please choose a number between 1 - 4: "
        
         elsif user_input_number == 1
-            display_crypto_stats("Bitcoin")
+            display_crypto_stats("Bitcoin", 0)
 
         elsif user_input_number == 2
-           display_crypto_stats("Litecoin")
+           display_crypto_stats("Litecoin", 1)
 
         elsif user_input_number == 3
-            display_crypto_stats("Dogecoin")
+            display_crypto_stats("Dogecoin", 2)
 
         elsif user_input_number == 4
-            display_crypto_stats("Ethereum")
+            display_crypto_stats("Ethereum", 3)
         end
     end 
+
+    def display_crypto_stats(crypto, user_input_number)
+        api = CliCrypto::Api.new
+        crypto_data = api.fetch
+        
+        puts crypto
+        puts "The Current Price is $#{crypto_data[user_input_number].price}: "
+        puts "The %change is #{crypto_data[user_input_number].change}: " #these numbers are actually on par with the API
+        puts "The Current Volume is #{crypto_data[user_input_number].volume}"
+        puts ""
+    end
 end
