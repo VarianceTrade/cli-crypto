@@ -1,5 +1,3 @@
-require "httparty"
-require_relative "crypto_currency"
 
 class CliCrypto::Api
     def fetch
