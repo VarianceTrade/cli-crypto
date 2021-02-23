@@ -1,7 +1,7 @@
 class CliCrypto::CryptoCurrency
     
-    def initialize(crypto, price, change, volume)
-        @crypto = crypto
+    def initialize(name, price, change, volume)
+        @name = name
         @price = price
         @change = change
         @volume = volume
