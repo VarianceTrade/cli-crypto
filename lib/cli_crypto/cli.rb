@@ -1,5 +1,5 @@
 
-class CliCrypto::CLI
+class CliCrypto::CLI  # ***** CLI class should NOT contain any data *****
 
     def call
         while true
@@ -23,12 +23,14 @@ class CliCrypto::CLI
     end
 
     def display_menu
+        api = CliCrypto::Api.new
+        stored_data = api.fetch
+
         puts ""
         puts "Here's A List Of Popular Crypto Currencies: "
-        puts "1. Bitcoin"
-        puts "2. Litecoin"
-        puts "3. Dogecoin"
-        puts "4. Etherium"
+        stored_data.each.with_index(1) do |crypto_currency, index|
+            puts "#{index}. #{crypto_currency.name}"
+        end
         puts ""
         sleep(3)
         puts "Choose A Crypto Currency To See More Details, Or Press X To Exit: "
@@ -57,7 +59,7 @@ class CliCrypto::CLI
         elsif user_input_number == 4
             display_crypto_stats("Ethereum", 3)
         end
-    end 
+    end
 
     def display_crypto_stats(crypto, user_input_number)
         api = CliCrypto::Api.new

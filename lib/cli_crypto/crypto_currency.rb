@@ -7,6 +7,10 @@ class CliCrypto::CryptoCurrency
         @volume = volume
     end
 
+    def name
+        @name
+    end
+
     def price
         @price
     end
