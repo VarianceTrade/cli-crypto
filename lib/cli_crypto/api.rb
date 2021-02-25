@@ -1,6 +1,7 @@
 
 class CliCrypto::Api
-    def fetch
+
+    def self.fetch
         # go make a fetch to the API for bitcoin data
         response_btc = HTTParty.get("https://api.cryptonator.com/api/ticker/btc-usd")
         response_ltc = HTTParty.get("https://api.cryptonator.com/api/ticker/ltc-usd")

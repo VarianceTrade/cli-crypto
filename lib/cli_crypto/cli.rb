@@ -23,8 +23,7 @@ class CliCrypto::CLI  # ***** CLI class should NOT contain any data *****
     end
 
     def display_menu
-        api = CliCrypto::Api.new
-        stored_data = api.fetch
+        stored_data = CliCrypto::Api.fetch()
 
         puts ""
         puts "Here's A List Of Popular Crypto Currencies: "
@@ -62,8 +61,7 @@ class CliCrypto::CLI  # ***** CLI class should NOT contain any data *****
     end
 
     def display_crypto_stats(crypto, user_input_number)
-        api = CliCrypto::Api.new
-        crypto_data = api.fetch
+        crypto_data = CliCrypto::Api.fetch()
         
         puts crypto
         puts "The Current Price is $#{crypto_data[user_input_number].price}: "
