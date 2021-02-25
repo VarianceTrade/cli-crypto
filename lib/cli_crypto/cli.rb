@@ -45,25 +45,16 @@ class CliCrypto::CLI  # ***** CLI class should NOT contain any data *****
         
         elsif user_input_number < 1 || user_input_number > 4
             puts "Sorry, this selection is invalid.  Please choose a number between 1 - 4: "
-       
-        elsif user_input_number == 1
-            display_crypto_stats("Bitcoin", 0)
-
-        elsif user_input_number == 2
-           display_crypto_stats("Litecoin", 1)
-
-        elsif user_input_number == 3
-            display_crypto_stats("Dogecoin", 2)
-
-        elsif user_input_number == 4
-            display_crypto_stats("Ethereum", 3)
+            
+        else
+            display_crypto_stats(user_input_number - 1) # handle inputs 1 - 4
         end
     end
 
-    def display_crypto_stats(crypto, user_input_number)
+    def display_crypto_stats(user_input_number)
         crypto_data = CliCrypto::Api.fetch()
         
-        puts crypto
+        puts crypto_data[user_input_number].name
         puts "The Current Price is $#{crypto_data[user_input_number].price}: "
         puts "The %change is #{crypto_data[user_input_number].change}: " #these numbers are actually on par with the API
         puts "The Current Volume is #{crypto_data[user_input_number].volume}"
