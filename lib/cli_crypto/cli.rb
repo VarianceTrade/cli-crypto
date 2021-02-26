@@ -1,6 +1,10 @@
 
 class CliCrypto::CLI  # ***** CLI class should NOT contain any data *****
 
+    def initialize
+        @crypto_data = CliCrypto::Api.fetch()
+    end
+
     def call
         while true
             greeting
@@ -23,11 +27,9 @@ class CliCrypto::CLI  # ***** CLI class should NOT contain any data *****
     end
 
     def display_menu
-        stored_data = CliCrypto::Api.fetch()
-
         puts ""
         puts "Here's A List Of Popular Crypto Currencies: "
-        stored_data.each.with_index(1) do |crypto_currency, index|
+        @crypto_data.each.with_index(1) do |crypto_currency, index|
             puts "#{index}. #{crypto_currency.name}"
         end
         puts ""
@@ -52,12 +54,11 @@ class CliCrypto::CLI  # ***** CLI class should NOT contain any data *****
     end
 
     def display_crypto_stats(user_input_number)
-        crypto_data = CliCrypto::Api.fetch()
-        
-        puts crypto_data[user_input_number].name
-        puts "The Current Price is $#{crypto_data[user_input_number].price}: "
-        puts "The %change is #{crypto_data[user_input_number].change}: " #these numbers are actually on par with the API
-        puts "The Current Volume is #{crypto_data[user_input_number].volume}"
+        @crypto_data = CliCrypto::Api.fetch()
+        puts @crypto_data[user_input_number].name
+        puts "The Current Price is $#{@crypto_data[user_input_number].price}: "
+        puts "The %change is #{@crypto_data[user_input_number].change}: " #these numbers are actually on par with the API
+        puts "The Current Volume is #{@crypto_data[user_input_number].volume}"
         puts ""
     end
 end
