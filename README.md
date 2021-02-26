@@ -1,8 +1,14 @@
 # CliCrypto
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/cli_crypto`. To experiment with that code, run `bin/console` for an interactive prompt.
+This gem displays a list of popular crypto currencies and gives the option to get more details about the crypto currency.
+The application will connect to the cryptonator api to fetch the latest data on the crypto currency.
+Data includes the crypto currency's: current price, current volume, and percentage change.
 
-TODO: Delete this and the text above, and describe your gem
+## Architecture
+
+The `CliCrypto::Api` class handles fetching data from the api and storing the results into an array.
+The crypto data is represented by a class called `CliCrypto::CryptoCurrency` that allows easy access to each crypto currency's set of statistics.
+
 
 ## Installation
 
@@ -22,7 +28,16 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+To run the app enter the following in the terminal:
+
+    $ bin/cli-crypto
+
+The menu is displayed and the user will enter a number to display a specific crypto currency.
+
+    $ Choose A Crypto Currency To See More Details, Or Press X To Exit: 
+
+
+After seeing the details, the user can enter `x` to exit or enter another number to see the details of another crypto currency.
 
 ## Development
 
