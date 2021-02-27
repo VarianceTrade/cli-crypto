@@ -1,16 +1,17 @@
 
 class CliCrypto::CLI  # ***** CLI class should NOT contain any data *****
 
-    def initialize
-        @crypto_data = CliCrypto::Api.fetch()
-    end
-
     def call
+        get_crypto_currencies
         while true
             greeting
             display_menu
             break if process_input == "break"
         end
+    end
+
+    def get_crypto_currencies
+        @crypto_data = CliCrypto::CryptoCurrency.all
     end
 
     def greeting
@@ -54,7 +55,6 @@ class CliCrypto::CLI  # ***** CLI class should NOT contain any data *****
     end
 
     def display_crypto_stats(user_input_number)
-        @crypto_data = CliCrypto::Api.fetch()
         puts @crypto_data[user_input_number].name
         puts "The Current Price is $#{@crypto_data[user_input_number].price}: "
         puts "The %change is #{@crypto_data[user_input_number].change}: " #these numbers are actually on par with the API
