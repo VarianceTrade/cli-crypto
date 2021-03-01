@@ -6,7 +6,7 @@ Data includes the crypto currency's: current price, current volume, and percenta
 
 ## Architecture
 
-The `CliCrypto::Api` class handles fetching data from the api and storing the results into an array.
+The `CliCrypto::Api` class handles fetching data from the api and creates instances of `CliCrypto::CryptoCurrency`
 The crypto data is represented by a class called `CliCrypto::CryptoCurrency` that allows easy access to each crypto currency's set of statistics.
 
 
