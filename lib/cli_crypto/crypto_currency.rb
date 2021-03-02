@@ -11,9 +11,12 @@ class CliCrypto::CryptoCurrency
     end
 
     def self.all
-        if @@all.empty? then CliCrypto::Api.fetch() end
+        if @@all.empty? then CliCrypto::Api.fetch() end #invoke before calling self.all
         @@all
     end
+
+    # purpose of the following methods and why I'm using them.  Gonna be asked about macros.
+    # why I have the save method
 
     def name
         @name
