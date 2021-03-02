@@ -12,17 +12,7 @@ The crypto data is represented by a class called `CliCrypto::CryptoCurrency` tha
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'cli_crypto'
-```
-
-And then execute:
-
-    $ bundle install
-
-Or install it yourself as:
+Install the dependencies with this line:
 
     $ gem install cli_crypto
 
