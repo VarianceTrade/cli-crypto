@@ -10,6 +10,7 @@ class CliCrypto::CLI  # ***** CLI class should NOT contain any data *****
         end
     end
 
+    # new method
     def get_crypto_currencies
         @crypto_data = CliCrypto::CryptoCurrency.all
     end
@@ -27,7 +28,7 @@ class CliCrypto::CLI  # ***** CLI class should NOT contain any data *****
         puts "HAVE A NICE DAY!!!"
     end
 
-    def display_menu
+    def display_menu #practice make app work without the @crypt_data instance variable
         puts ""
         puts "Here's A List Of Popular Crypto Currencies: "
         @crypto_data.each.with_index(1) do |crypto_currency, index|
@@ -46,7 +47,7 @@ class CliCrypto::CLI  # ***** CLI class should NOT contain any data *****
             exit_message
             return "break"
         
-        elsif user_input_number < 1 || user_input_number > 4
+        elsif user_input_number < 1 || user_input_number > 4 #could be asked to refactor
             puts "Sorry, this selection is invalid.  Please choose a number between 1 - 4: "
             
         else
