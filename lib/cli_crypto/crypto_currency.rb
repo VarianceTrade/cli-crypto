@@ -7,11 +7,11 @@ class CliCrypto::CryptoCurrency
         @price = price
         @change = change
         @volume = volume
+        @change_since_last_fetch = 0
         save
     end
 
     def self.all
-        if @@all.empty? then CliCrypto::Api.fetch() end #invoke before calling self.all
         @@all
     end
 
@@ -34,10 +34,42 @@ class CliCrypto::CryptoCurrency
         @volume
     end
 
+    def name=(name)
+        @name = name
+    end
+
+    def price=(price)
+
+        # Check if we are updating an old price
+        if (@price)
+            # Calculate and set change between fetches
+            change_since_last_fetch = (price.to_f - @price.to_f) / @price.to_f
+            @change_since_last_fetch = change_since_last_fetch
+        end
+
+        @price = price
+    end
+
+    def change=(change)
+        @change = change
+    end
+
+    def volume=(volume)
+        @volume = volume
+    end
+
     def save
         @@all << self
     end
 
-    
+    def change_since_last_fetch
+        @change_since_last_fetch
+    end
+
+    def self.clear
+        @@all = []
+    end
+
+    # consider using attr_reader     
 
 end

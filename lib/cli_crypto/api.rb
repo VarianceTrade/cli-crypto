@@ -7,19 +7,28 @@ class CliCrypto::Api
         # go make a fetch to the API for bitcoin data
 
         crypto_symbols = ["btc", "ltc", "doge", "etc"]
-
         full_crypto_name = ["Bitcoin", "Litecoin", "Dogecoin", "Ethereum"]
-
         crypto_index = 0
 
         crypto_symbols.each do |symbol|
             response = HTTParty.get("https://api.cryptonator.com/api/ticker/#{symbol}-usd")
-            CliCrypto::CryptoCurrency.new(
-                "#{full_crypto_name[crypto_index]}",
-                response["ticker"]["price"], 
-                response["ticker"]["change"], 
-                response["ticker"]["volume"])
-                crypto_index += 1
+            
+            # check if there was a previous fetch
+            if CliCrypto::CryptoCurrency.all[crypto_index]
+                old_crypto = CliCrypto::CryptoCurrency.all[crypto_index]
+                old_crypto.price = response["ticker"]["price"]
+                old_crypto.change = response["ticker"]["change"]
+                old_crypto.volume = response["ticker"]["volume"]
+            else # all array is empty
+                CliCrypto::CryptoCurrency.new(
+                    "#{full_crypto_name[crypto_index]}",
+                    response["ticker"]["price"], 
+                    response["ticker"]["change"], 
+                    response["ticker"]["volume"]
+                )
+            end
+            
+            crypto_index += 1
         end
 
         # response_btc = HTTParty.get("https://api.cryptonator.com/api/ticker/btc-usd")
